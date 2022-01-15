@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head><title>Plantilla del píe de página</title></head>
+    <body>
+        <footer th:fragment="copyright" class="page-footer">
+            <br>
+            <div class="common-footer-adys hidden-xs">
+                <span class="footer"></span>
+            </div>
+        </footer>
+        <!--/* JQuery */-->
+        <div th:fragment="jqueryJS">
+            <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+            <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+            <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/es.js"></script>
+            <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.20/sorting/datetime-moment.js"></script>
+        </div>
+        <!--/* BootstrapJS */-->
+        <div th:fragment="bootstrapJS">
+            <script th:inline="javascript">
+                /*<![CDATA[*/
+                $(document).ready(function () {
+                    /*Tooltip*/
+                    $(function () {
+                        $('[data-toggle="tooltip"]').tooltip();
+                    });
+                });
+                /*]]>*/
+            </script>
+        </div>
+        <!--/* BootstrapJS */-->
+        <div th:fragment="vueJS">
+            <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.min.js"></script>
+        </div>
+    </body>
+</html>

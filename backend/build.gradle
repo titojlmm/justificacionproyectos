@@ -1,0 +1,119 @@
+plugins {
+	id 'idea'
+	id 'org.springframework.boot' version '2.3.1.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'pl.allegro.tech.build.axion-release' version '1.10.2'
+	id 'java'
+	id 'maven-publish'
+	id 'war'
+	id 'application'
+}
+
+repositories {
+    mavenCentral()
+}
+
+scmVersion {
+	tag.initialVersion = {config, position -> '0.0.1'}
+	tag.prefix=''
+	hooks {
+		pre {context -> if(!"master".equalsIgnoreCase(context.position.branch)){
+			throw new Exception("Las releases sólo en la rama 'master' (estás en la rama '"+context.position.branch+"'")
+		}}
+	}
+	versionIncrementer 'incrementPatch'
+	useHighestVersion = true
+}
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+ext {
+	set('springCloudVersion', "Hoxton.SR6")
+}
+
+application {
+	mainClassName = "es.uc3m.adys.justificacionproyectos.JustificacionproyectosApplication"
+}
+
+dependencies {
+	//compile project(':frontend')//The server module depends on the web module
+
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
+	implementation 'org.springframework.data:spring-data-rest-webmvc'
+
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	compileOnly 'org.projectlombok:lombok'
+	// Driver
+//	implementation 'com.oracle.database.jdbc:ojdbc8:12.2.0.1'
+	runtimeOnly 'mysql:mysql-connector-java'
+
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+	annotationProcessor 'org.projectlombok:lombok'
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+	//compile 'es.uc3m.ws.personas-ws:personas-ws-cliente:1.4.0'
+	//compile 'es.uc3m.comun:acceso-uc3m:2.2.1'
+//	compile 'org.springframework.data:spring-data-rest-webmvc'
+
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
+springBoot {
+	buildInfo()
+}
+
+bootRun {
+	systemProperties = System.properties
+}
+
+task testResourcesAsMain( type: Copy ){
+	from 'src/test/resources'
+	into 'build/resources/main'
+	include '**/*.*'
+}
+
+task(debug, dependsOn: 'classes', type: JavaExec) {
+	dependsOn testResourcesAsMain
+	main = 'es.uc3m.adys.justificacionproyectos.JustificacionproyectosApplication'
+	classpath = sourceSets.main.runtimeClasspath
+	systemProperty 'spring.profiles.active', 'local'
+	systemProperty 'spring.datasource.password', 'xxxxxx'
+	systemProperty 'uc3m.logsdir', 'C:\temp'
+	debug true
+}
+
+publish {
+	dependsOn assemble
+}
+
+publishing.publications {
+	maven(MavenPublication) {
+		version project.version
+		from components.web
+	}
+}
+
+test {
+	useJUnitPlatform()
+}

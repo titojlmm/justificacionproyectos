@@ -1,0 +1,20 @@
+/* Al usar bootstrap se estropea el pie de ADYS, así lo volvemos a arreglar*/
+body{
+    margin:0;
+    padding:0;
+    margin-bottom: 60px;
+}
+
+caption{
+    font-weight: bold;
+    color:red;
+    caption-side: top;
+}
+
+label.text-danger{
+    font-weight: bold;
+}
+
+label.text-danger::after  {
+    content:"*";
+}

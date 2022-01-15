@@ -1,0 +1,163 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+    <head th:replace="~{@{cabecera}::cabeceraFragment}">
+    </head>
+    <body>
+        <header th:replace="~{@{cabecera}::cabeceraGespub}"></header>
+        <div class="container-fluid">
+            <div th:replace="~{@{componentes}::mensajeedicion}"></div>
+            <div class="card border-primary">
+                <div class="card-header">
+                    <h2 class="alert-heading"><span th:text="#{valida.titulo}"></span></h2>
+                    <span th:utext="#{valida.info}">Contenido de la pantalla de validación de publicaciones.</span>
+                </div>
+                <div class="card-body">
+                    <div class="row row-cols-1 row-cols-lg-2">
+                        <div class="col mb-4">
+                            <div class="card bg-light">
+                                <div class="card-header">
+                                    <h5 class="alert-heading"><span th:text="#{valida.instrucciones.titulo}"></span></h5>
+                                </div>
+                                <div class="card-body">
+                                    <span th:utext="#{valida.instrucciones}">Instrucciones de carga de las publicaciones a validar.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col mb-4">
+                            <div class="card bg-light">
+                                <div class="card-header">
+                                    <h5 class="alert-heading"><span th:text="#{valida.proceso.titulo}"></span></h5>
+                                </div>
+                                <div class="card-body" th:with="usuario=${session.get('__${T(es.uc3m.comun.acceso.util.UsuarioAccesoManager).USER_SESSION_PARAM_NAME}__')}">
+                                    <span th:utext="#{valida.proceso(${usuario.loginAcceso})}">Proceso de validación de publicaciones.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <form id="procesarfichero" role="form" enctype="multipart/form-data" method="post">
+                        <div class="row row-cols-1 row-cols-lg-2">
+                            <div class="col mb-4">
+                                <div class="card bg-light">
+                                    <div class="card-header">
+                                        <h5 class="alert-heading"><span th:text="#{valida.operaciones}"></span></h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <input type="file" name="ficheropublicaciones" id="ficheropublicaciones" class="form-control-file" accept="*" />
+                                    </div>
+                                    <div class="card-footer">
+                                        <button type="submit" th:formaction="@{/procesarfichero}" th:text="#{boton.procesar}" class="btn btn-primary btn-lg btn-block"></button>
+                                        <hr/>
+                                        <button th:if="${listapublicaciones != null and not #lists.isEmpty(listapublicaciones[0])}" type="submit" th:formaction="@{/validarpublicaciones}" th:text="#{boton.validar}" class="btn btn-primary btn-lg btn-block"></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div th:if="${listapublicaciones}" class="col mb-4">
+                                <div class="card bg-light">
+                                    <div class="card-header">
+                                        <h5 class="alert-heading"><span th:text="#{valida.resultados}"></span></h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div th:unless="${#lists.isEmpty(listapublicaciones[0])}" class="table-responsive">
+                                            <!--/* Listado de códigos de publicación a validar correcto */-->
+                                            <table id="tbCódigoscorrectos" class="table table-striped">
+                                                <caption th:text="#{valida.publicacion.codigocorrecto(${#lists.size(listapublicaciones[0])})}"></caption>
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col" th:text="#{valida.publicacion.codigo}"></th>
+                                                    <th class="text-center" scope="col" th:text="#{valida.publicacion.titulo}"></th>
+                                                    <th class="text-center" scope="col" th:text="#{valida.publicacion.validar}"></th>
+                                                    <th class="text-center" scope="col" th:text="#{valida.publicacion.licencia}"></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr th:each="publicacion : ${listapublicaciones[0]}">
+                                                    <td><span th:text="${publicacion.strcodigo}"></span></td>
+                                                    <td><span th:text="${publicacion.strtitulo}"></span></td>
+                                                    <td class="text-center">
+                                                        <input class="form-control" type="checkbox" th:id="|valida${publicacionStat.index}|" th:name="valida" th:value="${publicacion.strcodigo}" checked />
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <input class="form-control" type="checkbox" th:id="|deposito${publicacionStat.index}|" th:name="deposito" th:value="${publicacion.strcodigo}" />
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div th:unless="${#lists.isEmpty(listapublicaciones[1])}" class="table-responsive">
+                                            <!--/* Listado de códigos de publicación a validar incorrectos */-->
+                                            <table id="tbCodigosincorrectos" class="table table-striped">
+                                                <caption th:text="#{valida.publicacion.codigoincorrecto(${#lists.size(listapublicaciones[1])})}"></caption>
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col" th:text="#{valida.publicacion.codigo}"></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr th:each="publicacion : ${listapublicaciones[1]}">
+                                                    <td><span th:text="${publicacion.strcodigo}"></span></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div th:unless="${#lists.isEmpty(listapublicaciones[2])}" class="table-responsive">
+                                            <!--/* Listado de códigos de publicación a validar no encontrados en UXXI-INV */-->
+                                            <table id="tbCodigosnoencontrados" class="table table-striped">
+                                                <caption th:text="#{valida.publicacion.codigonoencontrado(${#lists.size(listapublicaciones[2])})}"></caption>
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col" th:text="#{valida.publicacion.codigo}"></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr th:each="publicacion : ${listapublicaciones[2]}">
+                                                    <td><span th:text="${publicacion.strcodigo}"></span></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div th:unless="${#lists.isEmpty(listapublicaciones[3])}" class="table-responsive">
+                                            <!--/* Listado de códigos de publicación a validar no encontrados en UXXI-INV */-->
+                                            <table id="tbCodigosrepetidos" class="table table-striped">
+                                                <caption th:text="#{valida.publicacion.codigorepetido(${#lists.size(listapublicaciones[3])})}"></caption>
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col" th:text="#{valida.publicacion.codigo}"></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr th:each="publicacion : ${listapublicaciones[3]}">
+                                                    <td><span th:text="${publicacion.strcodigo}"></span></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <footer th:replace="~{@{pie}::copyright}"></footer>
+        <div th:replace="~{@{pie}::jqueryJS}"></div>
+        <div th:replace="~{@{pie}::bootstrapJS}"></div>
+
+        <script th:inline="javascript">
+            $(document).ready(function () {
+                // Comprobación de check de depósito según el valor de validación
+                $(document).on('change', '[id*="valida"]', function() {
+                    // Se habilita/deshabilita el check de depósito en función del valor del check de valida
+                    var id = this.id.substring(6);
+                    if (this.checked) {
+                        $('#deposito'+id).prop("disabled", false);
+                    } else {
+                        $('#deposito'+id).prop("checked", false);
+                        $('#deposito'+id).prop("disabled", true);
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>

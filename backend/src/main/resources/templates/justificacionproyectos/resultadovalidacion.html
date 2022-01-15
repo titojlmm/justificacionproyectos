@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+    <head th:replace="~{@{cabecera}::cabeceraFragment}">
+    </head>
+    <body>
+        <header th:replace="~{@{cabecera}::cabeceraGespub}"></header>
+        <div class="container-fluid">
+            <div th:replace="~{@{componentes}::mensajeedicion}"></div>
+            <div class="card border-primary">
+                <div class="card-header">
+                    <h2 class="alert-heading"><span th:text="#{valida.resultado.titulo}"></span></h2>
+                    <span th:utext="#{valida.resultado.info}">Resultado de la validación de publicaciones.</span>
+                </div>
+                <div class="card-body">
+                    <form id="mostrarresultados" th:action="@{/mostrarresultados}" role="form" method="post">
+                        <div class="row">
+                            <div class="col mb-4">
+                                <div class="card bg-light">
+                                    <div class="card-header">
+                                        <h5 class="alert-heading"><span th:text="#{valida.resultado.cabecera}"></span></h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <!--/* Listado de publicaciones validadas en la fecha seleccionada */-->
+                                            <table id="tbResultadosvalidacion" class="table table-striped">
+                                                <caption th:if="${fechasvalidacion}">
+                                                    <span th:text="#{valida.resultado.seleccionefecha}"></span>
+                                                    <select class="form-control-sm" id="datlanzamiento" name="datlanzamiento">
+                                                        <option th:each="fechavalidacion : ${fechasvalidacion}"
+                                                                th:value="${fechavalidacion}"
+                                                                th:text="${#temporals.format(fechavalidacion, 'dd/MM/yyyy HH:mm:ss')}"
+                                                                th:selected="${fechaseleccionada == fechavalidacion}"></option>
+                                                    </select>
+                                                </caption>
+                                                <caption th:unless="${fechasvalidacion}" th:text="#{valida.resultado.sinfechas}"></caption>
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col" th:text="#{valida.publicacion.codigo}"></th>
+                                                    <th scope="col" th:text="#{valida.publicacion.titulo}"></th>
+                                                    <th scope="col" th:text="#{valida.publicacion.fuente}"></th>
+                                                    <th scope="col" th:text="#{valida.publicacion.usuario}"></th>
+                                                    <th class="text-center" scope="col" th:text="#{valida.publicacion.licencia}"></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr th:each="publicacion : ${publicacionesvalidadas}">
+                                                    <td><span th:text="${publicacion.strcodigo}"></span></td>
+                                                    <td><span th:text="${publicacion.strtitulo}"></span></td>
+                                                    <td><span th:text="${publicacion.strfuente}"></span></td>
+                                                    <td><span th:text="${publicacion.strusuario}"></span></td>
+                                                    <td class="text-center">
+                                                        <span th:if="${publicacion.blnlicencia}" th:remove="tag"><i class="fas fa-2x fa-check text-success"></i></span>
+                                                        <span th:unless="${publicacion.blnlicencia}" th:remove="tag"><i class="fas fa-2x fa-times text-danger"></i></span>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <footer th:replace="~{@{pie}::copyright}"></footer>
+        <div th:replace="~{@{pie}::jqueryJS}"></div>
+        <div th:replace="~{@{pie}::bootstrapJS}"></div>
+
+        <script th:inline="javascript">
+            $(document).ready(function () {
+                // Se realiza el submit cuando se cambia el check de la fecha de validación
+                $('#datlanzamiento').on('change', function() {
+                    // Se realiza el submit del formulario para que recargue la tabla
+                    $('#mostrarresultados').submit();
+                });
+            });
+        </script>
+    </body>
+</html>

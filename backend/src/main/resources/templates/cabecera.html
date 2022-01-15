@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="cabeceraFragment">
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Estilos Adys UC3M -->
+    <link href="https://aplicaciones.uc3m.es/web/css/adysaplicaciones.css" type="text/css" rel="stylesheet"/>
+    <!-- Bootstrap 4 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"/>
+    <!--/* Iconos */-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+          integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <!--/* Personalizar algunas cosas */-->
+    <link th:href="@{/css/custom.css}" type="text/css" rel="stylesheet"/>
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/img/justificacionproyectos.ico}"/>
+    <!--/* Título de la aplicación */-->
+    <title th:text="#{cabecera.titulo}"></title>
+</head>
+<body>
+<header th:fragment="cabeceraJustificacionproyectos" class="common-header-adys">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <span id="logoUC3M"></span>
+                <span id="nombreApp"><span th:text="#{cabecera.titulo}" th:alt-title="${version}"></span></span>
+            </div>
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-3">
+                        <a th:with="urlBuilder=${T(org.springframework.web.servlet.support.ServletUriComponentsBuilder).fromCurrentRequest()}" th:href="${urlBuilder.replaceQueryParam('lang', 'en').toUriString()}" th:title="#{lang.en}" data-toggle="tooltip" data-placement="top">
+                            <span><img alt="" th:src="@{/img/gb.png}" border="0"></span>
+                        </a>
+                        <a th:with="urlBuilder=${T(org.springframework.web.servlet.support.ServletUriComponentsBuilder).fromCurrentRequest()}" th:href="${urlBuilder.replaceQueryParam('lang', 'es').toUriString()}" th:title="#{lang.es}" data-toggle="tooltip" data-placement="top">
+                            <span><img alt="" th:src="@{/img/es.png}" border="0"></span>
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+										    <!--/* TO-DO: revisar la dirección de contacto */-->
+                        <a href="mailto:'uxxi-central@listserv.uc3m.es'">
+                            <i class="far fa-envelope"></i> <span th:text="#{cabecera.contacta}"></span>
+                        </a>
+                    </div>
+                  <!--/*
+                    <div class="col-md-6"
+                         th:if="${session.get('__${T(es.uc3m.comun.acceso.util.UsuarioAccesoManager).USER_SESSION_PARAM_NAME}__')}"
+                         th:with="usuario=${session.get('__${T(es.uc3m.comun.acceso.util.UsuarioAccesoManager).USER_SESSION_PARAM_NAME}__')}">
+                        <div class="row">
+                        <div class="col-md-9">
+                            <span th:text="${usuario.persona.nombre + ' ' + usuario.persona.apellido1 + ' ' + usuario.persona.apellido2 + ' (' + usuario.loginAcceso + ')'}"></span>
+                        </div>
+                        <div class="col-md-3">
+                            <a th:href="@{/salir}" th:alt-title="#{cabecera.salir}" data-toggle="tooltip" data-placement="top">
+                                <span class="font-weight-bold" th:text="#{cabecera.salir}"></span> <i class="fas fa-sign-out-alt"></i>
+                            </a>
+                        </div>
+                        </div>
+                    </div>
+                  */-->
+                </div>
+            </div>
+        </div>
+        <div class="row" style="clear:both; float:none; height: 0px"></div>
+    </div>
+</header>
+<br/>
+</body>
+</html>

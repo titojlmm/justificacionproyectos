@@ -1,0 +1,3 @@
+rootProject.name = 'justificacionproyectos'
+include 'frontend'
+include 'backend'

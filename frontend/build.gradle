@@ -1,0 +1,23 @@
+plugins {
+  id "com.github.node-gradle.node" version "3.1.1"
+  id 'java'
+}
+
+//dependencies {
+//	implementation 'com.github.node-gradle.node:com.github.node-gradle.node.gradle.plugin'
+//}
+
+//Gradle task calling the npm run build command
+task npmBuild (type: NpmTask, dependsOn: npmInstall) {
+    group = 'node'
+    args = ['run', 'build']
+}
+
+//The jar task of the Gradle java plugin depends on npmBuild, that is, the web submodule must run npm run build before jar
+jar.dependsOn npmBuild
+
+//Call npm run dev
+task npmDev (type: NpmTask, dependsOn: npmInstall) {
+    group = 'node'
+    args = ['run', 'dev']
+}

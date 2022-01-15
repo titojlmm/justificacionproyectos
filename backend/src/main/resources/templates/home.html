@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+    <head th:replace="~{@{cabecera}::cabeceraFragment}">
+    </head>
+    <body>
+        <header th:replace="~{@{cabecera}::cabeceraJustificacionproyectos}"></header>
+        <div class="container-fluid">
+            <div th:replace="~{@{componentes}::mensajeedicion}"></div>
+            <div class="card border-primary">
+                <div class="card-header">
+                    <h2 class="alert-heading"><span th:text="#{justificacionproyectos.titulo}"></span></h2>
+                    <span th:utext="#{justificacionproyectos.info}">Contenido de la pantalla de inicio de la aplicación.</span>
+                </div>
+                <div class="card-body">
+                    <div class="list-group">
+                        APLICACIÓN
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer th:replace="~{@{pie}::copyright}"></footer>
+        <div th:replace="~{@{pie}::jqueryJS}"></div>
+        <div th:replace="~{@{pie}::bootstrapJS}"></div>
+        <div th:replace="~{@{pie}::vueJS}"></div>
+    </body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+    <head th:replace="~{@{cabecera}::cabeceraFragment}"></head>
+    <body>
+        <header th:replace="~{@{cabecera}::cabeceraJustificacionproyectos}"></header>
+        <!--/* cuerpo */-->
+        <div class="container">
+            <div class="alert alert-danger" role="alert">
+                <h2 class="alert-heading text-center"><i class="fas fa-2x fa-exclamation-triangle"></i> <span th:text="${excepcion.cabecera}"/></h2>
+                <hr/>
+                <div class="alert alert-warning" role="alert">
+                    <p class="lead text-center"><span th:text="${excepcion.message}"/></p>
+                </div>
+                <p class="text-center">
+                    <a href="javascript:history.back()" class="btn btn-danger btn-lg btn-block" role="button"><span th:text="#{error.boton}"></span></a>
+                </p>
+            </div>
+        </div>
+        <footer th:replace="~{@{pie}::copyright}"></footer>
+    </body>
+</html>
