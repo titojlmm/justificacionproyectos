@@ -16,6 +16,9 @@ export default class TiposproyectoService {
   }
 
   create(data) {
+    data.numidtipo = data.strcodigo;
+    data.strcodigo = data.strcodigo.toUpperCase();
+    data.strdescripcion = data.strdescripcion.toUpperCase();
     return http.post('/tipo', data)
   }
 

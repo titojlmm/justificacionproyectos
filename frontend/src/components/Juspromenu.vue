@@ -10,27 +10,38 @@
 
 <script>
 import { ref } from 'vue';
+import {PrimeIcons} from 'primevue/api';
 
 export default {
   setup() {
     const items = ref([
-        {label:'Inicio', icon:'pi pi-fw pi-home', to: { name: 'home'}},
-        {label:'Ficheros de justificaciones', icon:'pi pi-fw pi-file-excel', items:[
-            {label:'Listado de lanzamientos', icon:'pi pi-fw pi-list'},
-            {label:'Nuevo lanzamiento', icon:'pi pi-fw pi-play'}
+        {label:'Inicio', icon:PrimeIcons.HOME, to: { name: 'home'}},
+        {label:'Ficheros de justificaciones', icon:PrimeIcons.FILE_EXCEL, items:[
+            {label:'Listado de lanzamientos', icon:PrimeIcons.LIST},
+            {label:'Nuevo lanzamiento', icon:PrimeIcons.PLAY}
         ]},
-        {label:'Mantenimiento', icon:'pi pi-fw pi-pencil', items:[
-            {label:'Tipos de proyecto', icon:'pi pi-fw pi-circle-off', to: { name: 'tiposproyecto'}},
-            {label:'Conceptos particulares', icon:'pi pi-fw pi-circle-off'},
-            {label:'Asociación concepto coste - particular', icon:'pi pi-fw pi-circle-off'},
+        {label:'Informes', icon:PrimeIcons.PRINT, items:[
+            {label:'Contratos con importe superior al límite', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT},
+            {label:'Facturas con importe superior al límite', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT},
             {separator:true},
-            {label:'Usuarios', icon:'pi pi-fw pi-user', items:[
-                {label:'Nuevo', icon:'pi pi-fw pi-user-plus'},
-                {label:'Eliminar', icon:'pi pi-fw pi-user-minus'},
-                {label:'Roles', icon:'pi pi-fw pi-key'}
-            ]},
+            {label:'Gastos justificación plan nacional', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT},
+            {label:'Justificación técnica', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT}
         ]},
-        {label:'Salir', icon:'pi pi-fw pi-power-off'}
+        {label:'Mantenimiento', icon:PrimeIcons.PENCIL, items:[
+            {label:'Tipos de proyecto', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT, to: { name: 'tiposproyecto'}},
+            {label:'Conceptos particulares', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT},
+            {label:'Asociación concepto coste - particular', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT},
+            {separator:true},
+            {label:'Bloques justificación técnica', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT},
+            {label:'Relación conceptos particulares - bloque técnica', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT},
+            {separator:true},
+            {label:'Usuarios', icon:PrimeIcons.USER, items:[
+                {label:'Nuevo', icon:PrimeIcons.USER_PLUS},
+                {label:'Eliminar', icon:PrimeIcons.USER_MINUS},
+                {label:'Roles', icon:PrimeIcons.KEY}
+            ]}
+        ]},
+        {label:'Salir', icon:PrimeIcons.SIGN_OUT}
     ]);
 
     return { items }

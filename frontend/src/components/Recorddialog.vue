@@ -5,13 +5,7 @@
         <template #header>
           <h5>{{ titulo }}</h5>
         </template>
-        <div v-if="modo ==='CREATE' || modo === 'UPDATE'" class="confirmation-content">
-            <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-            <span>Detalle del registro a crear/actualizar</span>
-        </div>
-        <div v-else-if="modo ==='DELETE'" class="confirmation-content">
-            <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-            <span v-if="registro">¿Está seguro de que quiere eliminar el registro '<b>{{ registro.strdescripcion }}</b>'?</span>
+        <div v-html="htmlregistro">
         </div>
         <template #footer>
             <Button label="Cancelar" icon="pi pi-times" class="p-button-text" @click="hideDialog"/>
@@ -36,7 +30,7 @@
     setup(props, { emit }) {
       const modo = ref();
       const titulo = ref();
-//var htmlcode = "";
+      const htmlregistro = ref();
       const toast = useToast();
       const registro = ref({});
       const visibleDialog = ref(false);
@@ -67,9 +61,6 @@
       const openNew = () => {
         registro.value = {};
         submitted.value = false;
-//tiposproyectorecord.value.hola();
-//        htmlcode = tiposproyectorecord.value.initRegistro(registro);
-//alert(htmlcode);
         visibleDialog.value = true;
       };
 
@@ -77,9 +68,7 @@
         // TO-DO: Escribir
         registro.value = {...reg};
 //        tiposproyectorecord.value.initRegistro(reg);
-//        htmlcode = tiposproyectorecord.value.initRegistro(reg);
 //alert(tiposproyectorecord.value.initRegistro(reg));
-//alert(htmlcode);
         visibleDialog.value = true;
       };
       const confirmDeleteRegistro = (reg) => {
@@ -93,8 +82,17 @@
       };
 
       const saveRegistro = () => {
-/*
         submitted.value = true;
+
+        if (modo.value === 'CREATE') {
+          crudservicio.value.create(registro.value);
+          toast.add({severity:'success', summary: 'Éxito', detail: 'Registro creado', life: 3000});
+        }
+        visibleDialog.value = false;
+        registro.value = {};
+        emit('recargardatos', true);
+
+/*
         if (registro.value.strdescripcion.trim()) {
 //          registro.value.blnvigente = togglevigente.value;
           if (registro.value._links && registro.value._links.self.href) {
@@ -126,7 +124,7 @@
 
       return {
         crudservicio, registro, visibleDialog, confirmDeleteRegistro, deleteRegistro, recargardatos, titulo, operacion,
-        openNew, editRegistro, submitted, modo, hideDialog, saveRegistro
+        openNew, editRegistro, submitted, modo, hideDialog, saveRegistro, htmlregistro
 //        , record, tiposproyectorecord
       }
     },

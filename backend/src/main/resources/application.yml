@@ -84,7 +84,7 @@ server:
 logging:
   level:
     org.hibernate.SQL: DEBUG
-    org.hibernate.type.descriptor.sql: TRACE
+#    org.hibernate.type.descriptor.sql: TRACE
     org.springframework.web: ERROR
     es.uc3m: DEBUG
 ---

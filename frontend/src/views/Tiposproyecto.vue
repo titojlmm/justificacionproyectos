@@ -144,15 +144,19 @@
 
       const openRegistro = (reg, modo) => {
         var titulo;
+        var htmlregistro;
         switch (modo) {
           case "CREATE" :
             titulo = titulos.creacion;
+            htmlregistro = getRegistroNuevo();
             break;
           case "UPDATE" :
             titulo = titulos.actualizacion;
+            htmlregistro = getRegistroActualizar(reg);
             break;
           case "DELETE" :
             titulo = titulos.eliminacion;
+            htmlregistro = getRegistroEliminar(reg);
             break;
           default :
             alert('Opción inválida');
@@ -160,7 +164,28 @@
         }
         recorddialog.value.modo = modo;
         recorddialog.value.titulo = titulo;
+        recorddialog.value.htmlregistro = htmlregistro;
         recorddialog.value.operacion(reg);
+      };
+
+      // TO-DO: implementar un componente por tipo de registro e inyectarlo en el componente genérico
+      // TO-DO: el método saveRegistro no ve los cambios realizados en el formulario usando esta técnica.
+      const getRegistroNuevo = () => {
+        return "<div><label for='strcodigo'>Código: </label><input type='text' name='strcodigo' id='strcodigo' value='' required class='p-inputtext'/></div>"
+                + "<div><label for='strcodigo'>Descripción: </label><input type='text' name='strdescripcion' id='strdescripcion' value='' required class='p-inputtext'/></div>"
+                + "<div><label for='strcodigo'>¿Vigente? </label><input type='checkbox' name='blnvigente' id='blnvigente' checked required class='p-field-checkbox'/></div>";
+      };
+
+      const getRegistroActualizar = (reg) => {
+        return "<div><label for='strcodigo'>Código: </label><input type='text' name='strcodigo' id='strcodigo' value='"+reg.strcodigo+"' required class='p-inputtext'/></div>"
+                + "<div><label for='strcodigo'>Descripción: </label><input type='text' name='strdescripcion' id='strdescripcion' value='"+reg.strdescripcion+"' required class='p-inputtext'/></div>"
+                + "<div><label for='strcodigo'>¿Vigente? </label><input type='checkbox' name='blnvigente' id='blnvigente' checked='"+reg.blnvigente+"' required class='p-field-checkbox'/></div>";
+      };
+
+      const getRegistroEliminar = (reg) => {
+        return "<div><label for='strcodigo'>Código: </label><input type='text' name='strcodigo' id='strcodigo' value='"+reg.strcodigo+"' disabled class='p-inputtext'/></div>"
+                + "<div><label for='strcodigo'>Descripción: </label><input type='text' name='strdescripcion' id='strdescripcion' value='"+reg.strdescripcion+"' disabled class='p-inputtext'/></div>"
+                + "<div><label for='strcodigo'>¿Vigente? </label><input type='checkbox' name='blnvigente' id='blnvigente' checked='"+reg.blnvigente+"' disabled class='p-field-checkbox'/></div>";
       };
 
       const filters = ref({
