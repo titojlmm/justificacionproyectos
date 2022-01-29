@@ -15,14 +15,18 @@
         <template #header>
           <div class="flex justify-content-between mb-2">
             <h5 class="mt-0" v-tooltip.right="'Tipos tal cual se definen en la entidad financiadora'">TIPOS DE PROYECTOS PARA LA JUSTIFICACIÓN</h5>
-            <span class="p-input-icon-left">
-              <i class="pi pi-search" />
-              <InputText v-model="filters['global'].value" placeholder="Buscar por..." />
-            </span>
           </div>
           <div class="flex justify-content-between">
-            <Button type="button" icon="pi pi-filter-slash" label="Limpiar filtros" class="button-outlined" @click="clearFilter()"/>
-            <Button icon="pi pi-external-link" label="Exportar datos (CSV)" @click="exportCSV($event)" />
+            <div>
+              <Button type="button" icon="pi pi-filter-slash" label="Limpiar filtros" class="button-outlined" @click="clearFilter()"/>
+              <span class="p-input-icon-left ml-2">
+                <i class="pi pi-search" />
+                <InputText v-model="filters['global'].value" placeholder="Buscar por..." />
+              </span>
+            </div>
+            <div>
+              <Button icon="pi pi-external-link" label="Exportar datos (CSV)" @click="exportCSV($event)" />
+            </div>
           </div>
         </template>
         <template #empty>
@@ -85,25 +89,23 @@
       </DataTable>
     </div>
 
-    <Recorddialog ref="recorddialog" @recargardatos="loadLazyData" />
+    <Tiposproyectorecord ref="tiposproyectorecord" @recargardatos="loadLazyData" />
   </div>
 </template>
 
 <script>
   import { ref, onMounted } from 'vue';
-  import {FilterMatchMode, FilterOperator} from 'primevue/api';
+  import {FilterMatchMode} from 'primevue/api';
+//  import {FilterMatchMode, FilterOperator} from 'primevue/api';
 
   import TiposproyectoService from '../service/TiposproyectoService';
 
-  import Recorddialog from "@/components/Recorddialog";
+  import Tiposproyectorecord from "@/components/Tiposproyectorecord";
 
   export default {
     name: "tiposproyecto",
     setup() {
       onMounted(() => {
-        // Se inyectan los valores de los servicios en los componentes hijo
-        recorddialog.value.crudservicio = tipoproyectoService;
-
         loading.value = true;
 
         // Parámetros iniciales para la tabla de datos
@@ -119,17 +121,8 @@
         loadLazyData();
       })
 
-      // Mensajes predefinidos
-      const titulos = {
-        creacion : 'Creación de nuevo registro',
-        actualizacion : 'Actualización del registro',
-        eliminacion : 'Confirmación de eliminación de registro'
-      };
-
       // Servicio para las operaciones CRUD de la tabla
       const tipoproyectoService = new TiposproyectoService();
-
-      const recorddialog = ref (Recorddialog);
 
       const listTipos = ref(null);
       const tipopry = ref();
@@ -142,57 +135,11 @@
       const totalRecords = ref(0);
       const lazyParams = ref({});
 
-      const openRegistro = (reg, modo) => {
-        var titulo;
-        var htmlregistro;
-        switch (modo) {
-          case "CREATE" :
-            titulo = titulos.creacion;
-            htmlregistro = getRegistroNuevo();
-            break;
-          case "UPDATE" :
-            titulo = titulos.actualizacion;
-            htmlregistro = getRegistroActualizar(reg);
-            break;
-          case "DELETE" :
-            titulo = titulos.eliminacion;
-            htmlregistro = getRegistroEliminar(reg);
-            break;
-          default :
-            alert('Opción inválida');
-            return;
-        }
-        recorddialog.value.modo = modo;
-        recorddialog.value.titulo = titulo;
-        recorddialog.value.htmlregistro = htmlregistro;
-        recorddialog.value.operacion(reg);
-      };
-
-      // TO-DO: implementar un componente por tipo de registro e inyectarlo en el componente genérico
-      // TO-DO: el método saveRegistro no ve los cambios realizados en el formulario usando esta técnica.
-      const getRegistroNuevo = () => {
-        return "<div><label for='strcodigo'>Código: </label><input type='text' name='strcodigo' id='strcodigo' value='' required class='p-inputtext'/></div>"
-                + "<div><label for='strcodigo'>Descripción: </label><input type='text' name='strdescripcion' id='strdescripcion' value='' required class='p-inputtext'/></div>"
-                + "<div><label for='strcodigo'>¿Vigente? </label><input type='checkbox' name='blnvigente' id='blnvigente' checked required class='p-field-checkbox'/></div>";
-      };
-
-      const getRegistroActualizar = (reg) => {
-        return "<div><label for='strcodigo'>Código: </label><input type='text' name='strcodigo' id='strcodigo' value='"+reg.strcodigo+"' required class='p-inputtext'/></div>"
-                + "<div><label for='strcodigo'>Descripción: </label><input type='text' name='strdescripcion' id='strdescripcion' value='"+reg.strdescripcion+"' required class='p-inputtext'/></div>"
-                + "<div><label for='strcodigo'>¿Vigente? </label><input type='checkbox' name='blnvigente' id='blnvigente' checked='"+reg.blnvigente+"' required class='p-field-checkbox'/></div>";
-      };
-
-      const getRegistroEliminar = (reg) => {
-        return "<div><label for='strcodigo'>Código: </label><input type='text' name='strcodigo' id='strcodigo' value='"+reg.strcodigo+"' disabled class='p-inputtext'/></div>"
-                + "<div><label for='strcodigo'>Descripción: </label><input type='text' name='strdescripcion' id='strdescripcion' value='"+reg.strdescripcion+"' disabled class='p-inputtext'/></div>"
-                + "<div><label for='strcodigo'>¿Vigente? </label><input type='checkbox' name='blnvigente' id='blnvigente' checked='"+reg.blnvigente+"' disabled class='p-field-checkbox'/></div>";
-      };
-
       const filters = ref({
           'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
-          'strcodigo': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
-          'strdescripcion': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.CONTAINS}]},
-          'blnvigente': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.EQUALS}]}
+//          'strcodigo': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
+//          'strdescripcion': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.CONTAINS}]},
+//          'blnvigente': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.EQUALS}]}
       });
 
       const clearFilter = () => {
@@ -201,9 +148,9 @@
       const initFilters = () => {
           filters.value = {
             'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
-            'strcodigo': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
-            'strdescripcion': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.CONTAINS}]},
-            'blnvigente': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.EQUALS}]}
+//            'strcodigo': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
+//            'strdescripcion': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.CONTAINS}]},
+//            'blnvigente': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.EQUALS}]}
           }
       };
 
@@ -232,11 +179,16 @@
           }, Math.random() * 1000 + 250);
       };
 
+      // Referencia al componente hijo
+      const tiposproyectorecord = ref (Tiposproyectorecord);
+      const openRegistro = (reg, modo) => {
+        tiposproyectorecord.value.openRegistro(reg, modo);
+      }
+
       return {
-        listTipos, columns,
-        tipopry, totalRecords, loading, loadLazyData, lazyParams, onPage, onSort, onFilter,
-        filters, clearFilter, initFilters,
-        titulos, openRegistro, recorddialog
+        listTipos, tipopry, columns, loading, totalRecords, lazyParams, filters,
+        clearFilter, initFilters, onPage, onSort, onFilter, loadLazyData,
+        tiposproyectorecord, openRegistro
       }
     },
     methods: {
@@ -245,7 +197,7 @@
       }
     },
     components: {
-      Recorddialog
+      Tiposproyectorecord
     }
   }
 </script>
