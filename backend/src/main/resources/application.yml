@@ -62,7 +62,7 @@ spring:
     #driverClassName: com.mysql.jdbc.Driver
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:mysql://localhost:3306/justificacionproyectos?useUnicode=true&characterEncoding=UTF-8&useSLL=false&serverTimezone=UTC&useLegacyDateTimeCode=false
-    username: Tito
+    username: developer
     password: ${spring.datasource.password}
     hikari:
       connection-timeout: 60000
