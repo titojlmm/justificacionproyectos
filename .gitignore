@@ -39,3 +39,4 @@ nb-configuration.xml
 gradlew
 gradlew.bat
 gradle/
+frontend/package-lock.json
