@@ -28,6 +28,7 @@ export default {
             {label:'Justificación técnica', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT}
         ]},
         {label:'Mantenimiento', icon:PrimeIcons.PENCIL, items:[
+            {label:'Centros de coordinación', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT, to: { name: 'centros'}},
             {label:'Tipos de proyecto', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT, to: { name: 'tiposproyecto'}},
             {label:'Conceptos particulares', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT},
             {label:'Asociación concepto coste - particular', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT},

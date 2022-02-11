@@ -4,6 +4,7 @@ import Home from "./views/Home.vue";
 import Users from "./views/Users.vue";
 import NotFound from "./views/NotFound.vue";
 import Tiposproyecto from "./views/Tiposproyecto.vue";
+import Centros from "./views/Centros.vue";
 
 const routes = [
   {
@@ -20,6 +21,11 @@ const routes = [
     path: "/tiposproyecto",
     name: "tiposproyecto",
     component: Tiposproyecto
+  },
+  {
+    path: "/centros",
+    name: "centros",
+    component: Centros
   },
   {
     path: "/:catchAll(.*)",
