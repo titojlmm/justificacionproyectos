@@ -33,7 +33,7 @@ export default {
             {label:'Conceptos particulares', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT},
             {label:'Asociación concepto coste - particular', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT},
             {separator:true},
-            {label:'Bloques justificación técnica', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT},
+            {label:'Bloques justificación técnica', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT, to: { name: 'bloquestecnica'}},
             {label:'Relación conceptos particulares - bloque técnica', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT},
             {separator:true},
             {label:'Usuarios', icon:PrimeIcons.USER, items:[
