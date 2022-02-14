@@ -36,6 +36,9 @@ export default {
             {label:'Bloques justificación técnica', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT, to: { name: 'bloquestecnica'}},
             {label:'Relación conceptos particulares - bloque técnica', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT},
             {separator:true},
+            {label:'Conceptos de coste (UXXI-INV)', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT, to: { name: 'conceptoscoste'}},
+            {label:'Proyectos (UXXI-INV)', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT, to: { name: 'proyectosuxxi'}},
+            {separator:true},
             {label:'Usuarios', icon:PrimeIcons.USER, items:[
                 {label:'Nuevo', icon:PrimeIcons.USER_PLUS},
                 {label:'Eliminar', icon:PrimeIcons.USER_MINUS},

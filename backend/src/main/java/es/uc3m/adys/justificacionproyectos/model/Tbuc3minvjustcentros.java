@@ -1,5 +1,6 @@
 package es.uc3m.adys.justificacionproyectos.model;
 
+import java.io.Serializable;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,7 +15,7 @@ import javax.persistence.Table;
 @Table(name="tb_uc3m_inv_just_centros", schema = "justificacionproyectos")
 @Getter
 @Setter
-public class Tbuc3minvjustcentros {
+public class Tbuc3minvjustcentros implements Serializable {
   @Id @GeneratedValue(strategy= GenerationType.IDENTITY)
 	@Column(name = "NUMIDCENTRO")
   private Long numidcentro;
