@@ -6,6 +6,7 @@ import NotFound from "./views/NotFound.vue";
 import Tiposproyecto from "./views/Tiposproyecto.vue";
 import Centros from "./views/Centros.vue";
 import Bloquestecnica from "./views/Bloquestecnica.vue";
+import Estadosagr from "./views/Estadosagr.vue";
 import Conceptoscoste from "./views/Conceptoscoste.vue";
 import Proyectosuxxi from "./views/Proyectosuxxi.vue";
 
@@ -29,6 +30,11 @@ const routes = [
     path: "/bloquestecnica",
     name: "bloquestecnica",
     component: Bloquestecnica
+  },
+  {
+    path: "/estadosagr",
+    name: "estadosagr",
+    component: Estadosagr
   },
   {
     path: "/conceptoscoste",

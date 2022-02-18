@@ -17,24 +17,26 @@ export default {
     const items = ref([
         {label:'Inicio', icon:PrimeIcons.HOME, to: { name: 'home'}},
         {label:'Ficheros de justificaciones', icon:PrimeIcons.FILE_EXCEL, items:[
-            {label:'Listado de lanzamientos', icon:PrimeIcons.LIST},
-            {label:'Nuevo lanzamiento', icon:PrimeIcons.PLAY}
+            {label:'Listado de agrupaciones', icon:PrimeIcons.LIST},
+            {label:'Nueva agrupación', icon:PrimeIcons.PLAY}
         ]},
         {label:'Informes', icon:PrimeIcons.PRINT, items:[
-            {label:'Contratos con importe superior al límite', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT},
-            {label:'Facturas con importe superior al límite', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT},
+            {label:'Contratos con importe superior al límite'},
+            {label:'Facturas con importe superior al límite'},
             {separator:true},
-            {label:'Gastos justificación plan nacional', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT},
-            {label:'Justificación técnica', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT}
+            {label:'Gastos justificación plan nacional'},
+            {label:'Justificación técnica'}
         ]},
         {label:'Mantenimiento', icon:PrimeIcons.PENCIL, items:[
             {label:'Centros de coordinación', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT, to: { name: 'centros'}},
             {label:'Tipos de proyecto', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT, to: { name: 'tiposproyecto'}},
-            {label:'Conceptos particulares', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT},
-            {label:'Asociación concepto coste - particular', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT},
+            {label:'Conceptos particulares'},
+            {label:'Asociación concepto coste - particular'},
             {separator:true},
             {label:'Bloques justificación técnica', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT, to: { name: 'bloquestecnica'}},
-            {label:'Relación conceptos particulares - bloque técnica', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT},
+            {label:'Relación conceptos particulares - bloque técnica'},
+            {separator:true},
+            {label:'Estados de las agrupaciones', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT, to: { name: 'estadosagr'}},
             {separator:true},
             {label:'Conceptos de coste (UXXI-INV)', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT, to: { name: 'conceptoscoste'}},
             {label:'Proyectos (UXXI-INV)', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT, to: { name: 'proyectosuxxi'}},

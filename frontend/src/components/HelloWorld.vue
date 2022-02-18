@@ -11,7 +11,7 @@ export default {
     }
   },
   mounted() {
-    const API_CALL = '/api/messages/hello';
+    const API_CALL = '/api/messages/home';
     fetch(API_CALL)
       .then((response) => response.text())
       .then((data) => {

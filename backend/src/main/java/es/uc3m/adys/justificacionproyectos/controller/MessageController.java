@@ -8,9 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/messages")
 public class MessageController {
 
-  @GetMapping("/hello")
+  // TO-DO: eliminar esta clase de ejemplo y utilizar directamente una página vue
+  @GetMapping("/home")
   public String hello() {
-    return "Full Stack Java with Spring Boot & VueJS!";
+    return "Bienvenido a la aplicación de gestión de justificaciones";
   }
 
 }
