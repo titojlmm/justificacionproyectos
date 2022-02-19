@@ -12,17 +12,17 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tb_uc3m_inv_just_centros", schema = "justificacionproyectos")
+@Table(name="tb_uc3m_inv_just_tecnica", schema = "justificacionproyectos")
 @Getter
 @Setter
-public class Tbuc3minvjustcentros implements Serializable {
+public class Bloquestecnica implements Serializable {
   @Id @GeneratedValue(strategy= GenerationType.IDENTITY)
-	@Column(name = "NUMIDCENTRO")
-  private Long numidcentro;
+	@Column(name = "NUMIDTECNICA")
+  private Long numidtecnica;
 
-  @Column(name = "STRREFEXTPROYECTO")
-  private String strrefextproyecto;
+  @Column(name = "STRTECNICA")
+  private String strtecnica;
 
-  @Column(name = "STRCODIGOCENTRO")
-  private String strcodigocentro;
+  @Column(name = "STRCODIGO")
+  private String strcodigo;
 }

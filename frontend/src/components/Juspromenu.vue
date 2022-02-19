@@ -30,7 +30,7 @@ export default {
         {label:'Mantenimiento', icon:PrimeIcons.PENCIL, items:[
             {label:'Centros de coordinación', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT, to: { name: 'centros'}},
             {label:'Tipos de proyecto', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT, to: { name: 'tiposproyecto'}},
-            {label:'Conceptos particulares'},
+            {label:'Conceptos de la entidad', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT, to: { name: 'concentidad'}},
             {label:'Asociación concepto coste - particular'},
             {separator:true},
             {label:'Bloques justificación técnica', icon:PrimeIcons.CHEVRON_CIRCLE_RIGHT, to: { name: 'bloquestecnica'}},

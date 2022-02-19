@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Table(name="tb_uc3m_inv_just_estados_agr", schema = "justificacionproyectos")
 @Getter
 @Setter
-public class Tbuc3minvjustestadosagr implements Serializable {
+public class Estadosagr implements Serializable {
   @Id
 	@Column(name = "NUMIDESTADO")
   private Long numidestado;
