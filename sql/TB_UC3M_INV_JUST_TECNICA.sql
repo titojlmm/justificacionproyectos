@@ -1,10 +1,43 @@
 CREATE TABLE TB_UC3M_INV_JUST_TECNICA (
   NUMIDTECNICA  INT    		NOT NULL AUTO_INCREMENT COMMENT 'Identificador del tipo de gasto de la justificación técnica',
-  STRTECNICA    VARCHAR(50) NOT NULL COMMENT 'Descripción del tipo de gasto de la justificación técnica',
   STRCODIGO     VARCHAR(50) NOT NULL COMMENT 'Código del tipo de gasto de la justificación técnica',
+  STRTECNICA    VARCHAR(50) NOT NULL COMMENT 'Descripción del tipo de gasto de la justificación técnica',
   PRIMARY KEY (NUMIDTECNICA)
 ) COMMENT 'Tabla que contiene los tipos de gastos desde el punto de vista de la justificación técnica';
+---------------------- ORACLE ------------------------
+CREATE SEQUENCE TECNICOS_INV.JUST_TECNICA_SQ;
 
+CREATE TABLE TECNICOS_INV.TB_UC3M_INV_JUST_TECNICA (
+  NUMIDTECNICA  NUMBER(8)     NOT NULL,
+  STRCODIGO     VARCHAR2(50)  NOT NULL,
+  STRTECNICA    VARCHAR2(50)  NOT NULL
+);
+
+COMMENT ON TABLE TECNICOS_INV.TB_UC3M_INV_JUST_TECNICA IS 'Tabla que contiene los tipos de gastos desde el punto de vista de la justificación técnica.';
+COMMENT ON COLUMN TECNICOS_INV.TB_UC3M_INV_JUST_TECNICA.NUMIDTECNICA IS 'Identificador del tipo de gasto de la justificación técnica.';
+COMMENT ON COLUMN TECNICOS_INV.TB_UC3M_INV_JUST_TECNICA.STRCODIGO IS 'Código del tipo de gasto de la justificación técnica.';
+COMMENT ON COLUMN TECNICOS_INV.TB_UC3M_INV_JUST_TECNICA.STRTECNICA IS 'Descripción del tipo de gasto de la justificación técnica.';
+
+CREATE UNIQUE INDEX TECNICOS_INV.JUST_TECNICA_PK_I ON TECNICOS_INV.TB_UC3M_INV_JUST_TECNICA (NUMIDTECNICA);
+CREATE UNIQUE INDEX TECNICOS_INV.JUST_TECNICA_UK_I ON TECNICOS_INV.TB_UC3M_INV_JUST_TECNICA (STRCODIGO);
+
+ALTER TABLE TECNICOS_INV.TB_UC3M_INV_JUST_TECNICA ADD (
+  CONSTRAINT JUST_TECNICA_PK
+  PRIMARY KEY (NUMIDTECNICA)
+  USING INDEX TECNICOS_INV.JUST_TECNICA_PK_I
+  ENABLE VALIDATE
+);
+
+CREATE OR REPLACE TRIGGER TG_JUST_TECNICA_SQ
+  BEFORE INSERT 
+  ON TB_UC3M_INV_JUST_TECNICA FOR EACH ROW
+BEGIN
+  IF :new.NUMIDTECNICA IS NULL THEN
+    SELECT JUST_TECNICA_SQ.nextval INTO :new.NUMIDTECNICA FROM DUAL;
+  END IF;
+END;
+/
+------------------------------------------------------
 Insert into TB_UC3M_INV_JUST_TECNICA
    (NUMIDTECNICA, STRTECNICA, STRCODIGO)
  Values
